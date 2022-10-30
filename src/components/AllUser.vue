@@ -13,6 +13,8 @@
         </div>
     </div>
 
+   
+
 
 
 
@@ -26,10 +28,60 @@
 export default {
   props: ['Id','FirstName', 'LastName','Email'],
   
+
+  data() {
+    return {
+       results: [],
+       userID:null,
+    //    x:[],
+    };
+  },
+  emits: ["convo"],
   methods:{
-    conversation(){
-        alert();
-    }
+    async conversation() {
+        this.userID2=this.Id;
+    await  fetch(
+        
+        `https://localhost:44313/api/all/coversation/1/${this.userID2}`,
+        {
+          method: "GET",
+        }
+      )
+        .then((response) => {
+          if (response.ok) {
+             return response.json();
+             //console.log(response)
+          }
+        })
+        .then((data) => {
+          // this.isLoading = false;
+          
+        //   console.log(data)
+          const results = [];
+          for (const id in data) {
+            results.push({
+              // id:id,
+              // name:data[id].name,
+             // rating: data[id].rating,
+              Id: data[id].Id,
+              Text: data[id].Text,
+              UserId: data[id].UserId,
+              UserId2: data[id].UserId2,
+             
+            });
+          }
+          this.results = results;
+        //   console.log(this.results)
+        })
+        .catch((error) => {
+          console.log(error);
+          // alert(error)
+          this.isLoading = false;
+          this.error = error;
+        });
+        this.$emit('convo', this.results);
+    },
+    
   }
 
 };
