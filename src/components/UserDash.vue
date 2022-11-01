@@ -87,7 +87,7 @@ export default {
   },
   methods: {
     sendMsg(){
-      alert()
+     // alert()
       this.Id1=this.$store.getters["user/loggedUserId"];
       this.Id2 = this.$store.getters["user/getId2"];
       fetch(
@@ -197,9 +197,56 @@ export default {
       console.log(this.Id2)
       //console.log(this.results2);
     },
+
+    allMessages(){
+      this.Id1=this.$store.getters["user/loggedUserId"];
+      this.Id2 = this.$store.getters["user/getId2"];
+        fetch(
+        
+        `https://localhost:44313/api/all/coversation/${this.Id1}/${this.Id2}`,
+        {
+          method: "GET",
+        }
+      )
+        .then((response) => {
+          if (response.ok) {
+             return response.json();
+             //console.log(response)
+          }
+        })
+        .then((data) => {
+          // this.isLoading = false;
+          
+        //   console.log(data)
+          const results = [];
+          for (const id in data) {
+            results.push({
+              // id:id,
+              // name:data[id].name,
+             // rating: data[id].rating,
+              Id: data[id].Id,
+              Text: data[id].Text,
+              UserId: data[id].UserId,
+              UserId2: data[id].UserId2,
+             
+            });
+          }
+          this.results2 = results;
+        //   console.log(this.results)
+        })
+        .catch((error) => {
+          console.log(error);
+          // alert(error)
+          //this.isLoading = false;
+          //this.error = error;
+        });
+        // this.$emit('convo', this.results);
+    }
   },
   mounted() {
     setInterval(this.loadUsers, 2000);
+    setInterval(this.allMessages, 2000);
+
   },
 };
 </script>

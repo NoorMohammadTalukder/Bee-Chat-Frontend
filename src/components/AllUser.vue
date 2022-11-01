@@ -37,7 +37,7 @@ export default {
     };
   },
 
-  emits: ["convo"],
+  // emits: ["convo"],
   created() {
     this.userID = this.$store.getters["user/loggedUserId"];
     // console.log(this.userID)
@@ -45,53 +45,53 @@ export default {
   },
   methods:{
     async conversation() {
-        this.userID2=this.Id;
-
+        // this.userID2=this.Id;
+// alert()
         this.$store.dispatch("user/addId2", {
             Id2: this.Id,
             
           });
         
-    await  fetch(
+    // await  fetch(
         
-        `https://localhost:44313/api/all/coversation/${this.userID}/${this.userID2}`,
-        {
-          method: "GET",
-        }
-      )
-        .then((response) => {
-          if (response.ok) {
-             return response.json();
-             //console.log(response)
-          }
-        })
-        .then((data) => {
-          // this.isLoading = false;
+    //     `https://localhost:44313/api/all/coversation/${this.userID}/${this.userID2}`,
+    //     {
+    //       method: "GET",
+    //     }
+    //   )
+    //     .then((response) => {
+    //       if (response.ok) {
+    //          return response.json();
+    //          //console.log(response)
+    //       }
+    //     })
+    //     .then((data) => {
+    //       // this.isLoading = false;
           
-        //   console.log(data)
-          const results = [];
-          for (const id in data) {
-            results.push({
-              // id:id,
-              // name:data[id].name,
-             // rating: data[id].rating,
-              Id: data[id].Id,
-              Text: data[id].Text,
-              UserId: data[id].UserId,
-              UserId2: data[id].UserId2,
+    //     //   console.log(data)
+    //       const results = [];
+    //       for (const id in data) {
+    //         results.push({
+    //           // id:id,
+    //           // name:data[id].name,
+    //          // rating: data[id].rating,
+    //           Id: data[id].Id,
+    //           Text: data[id].Text,
+    //           UserId: data[id].UserId,
+    //           UserId2: data[id].UserId2,
              
-            });
-          }
-          this.results = results;
-        //   console.log(this.results)
-        })
-        .catch((error) => {
-          console.log(error);
-          // alert(error)
-          //this.isLoading = false;
-          //this.error = error;
-        });
-        this.$emit('convo', this.results);
+    //         });
+    //       }
+    //       this.results = results;
+    //     //   console.log(this.results)
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //       // alert(error)
+    //       //this.isLoading = false;
+    //       //this.error = error;
+    //     });
+    //     this.$emit('convo', this.results);
     },
     
 
