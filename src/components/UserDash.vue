@@ -6,7 +6,7 @@
     crossorigin="anonymous"
   />
 
-  <div class="row  g-0">
+  <div class="row h-75 g-0">
     <div class="col-3 shadow-lg">
       <div class="text-center bg-primary m-0 p-0">All Users</div>
       <all-user
@@ -21,7 +21,7 @@
       </all-user>
     </div>
 
-    <div class="col-9 cc bg-danger ">
+    <div class="col-9 bg-danger parent">
       <div class="col-12 w-100 bg-success">
         <h5>{{ loggedMail }}</h5>
       </div>
@@ -32,6 +32,24 @@
         :UserId="x.UserId"
         :UserId2="x.UserId2"
       ></the-conversation>
+
+     
+
+     
+        <form  @submit.prevent="sendMsg" action="">
+          <div class="input-group mb-3 sticky child">
+          <input
+          type="text"
+          class="form-control"
+          placeholder="Enter Your Message"
+          aria-label="Enter Your Message"
+          aria-describedby="basic-addon2"
+          v-model="Text"
+        />
+        <button type="submit" class="btn btn-primary me-1">Send</button>
+      </div>
+        </form>
+      
     </div>
   </div>
 </template>
@@ -51,6 +69,9 @@ export default {
       // x: [],
       // xx:'',
       loggedMail: "",
+      Text:"",
+      Id1:"",
+      Id2:""
     };
   },
 
@@ -65,6 +86,41 @@ export default {
     this.GetLoggedUser();
   },
   methods: {
+    sendMsg(){
+      alert()
+      this.Id1=this.$store.getters["user/loggedUserId"];
+      this.Id2 = this.$store.getters["user/getId2"];
+      fetch(
+                "https://localhost:44313/api/create/messsage/user",
+                {
+                    method: "POST",
+                    headers: {
+                    "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                    Text: this.Text,
+                    UserId: this.Id1,
+                    UserId2: this.Id2,
+                    
+                    }),
+                
+                }
+                )
+                .then((response) => {
+                    if (!response.ok) {
+                    throw new Error("Could not save the data");
+                    }else{
+                        this.Text="";
+                        this.UserId="";
+                        this.UserId2="";
+                    }
+                })
+                .catch((error) => {
+                    this.error = error;
+                    console.log(error);
+                }
+            );
+    },
     async loadUsers() {
       await fetch("https://localhost:44313/api/all/user", {
         method: "GET",
@@ -135,9 +191,11 @@ export default {
 
     convo(value) {
       // alert();
-      console.log("resulys");
+     // console.log(value);
       this.results2 = value;
-      console.log(this.results2);
+      this.Id2=value.Id;
+      console.log(this.Id2)
+      //console.log(this.results2);
     },
   },
   mounted() {
@@ -147,7 +205,17 @@ export default {
 </script>
 
 <style scoped>
-.cc{
-  height: 1000px;
+/* .sticky{
+   position: -webkit-sticky; 
+  position: sticky;
+  top: -100;
+} */
+
+.parent{
+  position: relative;
+}
+.child{
+  position: absolute;
+    bottom: 0;
 }
 </style>

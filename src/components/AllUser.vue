@@ -36,15 +36,22 @@ export default {
     //    x:[],
     };
   },
+
   emits: ["convo"],
   created() {
     this.userID = this.$store.getters["user/loggedUserId"];
-    console.log(this.userID)
-   
+    // console.log(this.userID)
+    ///setInterval(this.conversation, 2000);
   },
   methods:{
     async conversation() {
         this.userID2=this.Id;
+
+        this.$store.dispatch("user/addId2", {
+            Id2: this.Id,
+            
+          });
+        
     await  fetch(
         
         `https://localhost:44313/api/all/coversation/${this.userID}/${this.userID2}`,
@@ -81,15 +88,25 @@ export default {
         .catch((error) => {
           console.log(error);
           // alert(error)
-          this.isLoading = false;
-          this.error = error;
+          //this.isLoading = false;
+          //this.error = error;
         });
         this.$emit('convo', this.results);
     },
     
-  }
+
+    
+  },
+
+  // mounted() {
+  //   setInterval(this.conversation, 2000);
+  // },
+
+ 
 
 };
+
+
 </script>
 
 <style scoped>

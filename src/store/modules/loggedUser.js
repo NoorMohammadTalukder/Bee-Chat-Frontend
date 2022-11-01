@@ -7,6 +7,7 @@ export default{
             loggedUserId:null,
             loggedUserFirstName:null,
             loggedUserLastName:null,
+            Id2:null,
 
            
         };
@@ -30,8 +31,12 @@ export default{
             state.loggedUserId=payload.Id;
             state.loggedUserFirstName=payload.FirstName;
             state.loggedUserLastName=payload.LastName;
-              console.log("54646466")
-            console.log(state.loggedUserId)
+            
+            //console.log(state.loggedUserId)
+        },
+        setId2(state,payload){
+            state.Id2=payload.Id2;
+           
         }
     },
 
@@ -41,6 +46,9 @@ export default{
         },
         addUserDetail(context,payload){
             context.commit('userDetail',payload)
+        },
+        addId2(context,payload){
+            context.commit('setId2',payload)
         }
         
     },
@@ -51,6 +59,9 @@ export default{
         },
         loggedUserId(state){
             return state.loggedUserId;
+        },
+        getId2(state){
+            return state.Id2;
         },
            
        
