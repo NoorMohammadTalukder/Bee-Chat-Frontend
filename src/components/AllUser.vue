@@ -37,12 +37,17 @@ export default {
     };
   },
   emits: ["convo"],
+  created() {
+    this.userID = this.$store.getters["user/loggedUserId"];
+    console.log(this.userID)
+   
+  },
   methods:{
     async conversation() {
         this.userID2=this.Id;
     await  fetch(
         
-        `https://localhost:44313/api/all/coversation/1/${this.userID2}`,
+        `https://localhost:44313/api/all/coversation/${this.userID}/${this.userID2}`,
         {
           method: "GET",
         }
