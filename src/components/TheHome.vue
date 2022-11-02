@@ -61,13 +61,13 @@
         </div>
       </div>
       <div class="clearfix"></div>
-    </div>
+    </div> -->
 
     <div class="footer">
       <div class="container">
-        <p>&copy; Broadway 2015</p>
+        <p>&copy; All Right Reserve By Bee Chat 2022</p>
       </div>
-    </div> -->
+    </div>
  
 
 </template>
@@ -84,7 +84,7 @@ export default {
     },
   methods:{
     async login(){ 
-      alert()
+     // alert()
             //this.clicked=true;
            await fetch(
                 "https://localhost:44313/api/login/user",
@@ -267,13 +267,15 @@ export default {
   .footer {
     background-color: #333;
     color: #fff;
-    padding: 30px 0;
+    padding: 10px 0;
   }
   
   .footer p {
     font-family: 'Raleway', sans-serif;
     text-transform: uppercase;
-    font-size: 11px;
+    font-size: 15px;
+    margin-top: 15px;
+    text-align: center;
   }
   
   @media (max-width: 500px) {

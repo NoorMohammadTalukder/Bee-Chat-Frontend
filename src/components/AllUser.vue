@@ -1,7 +1,7 @@
 <template>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <div class="d-flex">
+    <div class="d-flex col-12">
         <div class="img"><img src="https://media.istockphoto.com/vectors/user-member-vector-icon-for-ui-user-interface-or-profile-face-avatar-vector-id1130884625?k=20&m=1130884625&s=612x612&w=0&h=OITK5Otm_lRj7Cx8mBhm7NtLTEHvp6v3XnZFLZmuB9o=" alt=""></div>
         <div class="d-flex justify-content-start align-items-center  w-100">
            <div class="name w-50">
@@ -37,7 +37,7 @@ export default {
     };
   },
 
-  // emits: ["convo"],
+   emits: ["convo"],
   created() {
     this.userID = this.$store.getters["user/loggedUserId"];
     // console.log(this.userID)
@@ -56,7 +56,7 @@ export default {
           x: this.FirstName  ,
             
           });
-          console.log(this.FirstName)
+        //  console.log(this.FirstName)
         
     // await  fetch(
         

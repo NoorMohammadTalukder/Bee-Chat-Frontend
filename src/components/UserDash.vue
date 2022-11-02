@@ -6,9 +6,9 @@
     crossorigin="anonymous"
   />
 
-  <div class="row h-75 g-0">
-    <div class="col-3 shadow-lg p-3">
-      <div class="text-center bg-primary m-0 p-0">All Users</div>
+  <div class="row h-75 g-0 z">
+    <div class="col-3 all-user shadow-lg p-3">
+      <div class="text-center  mb-2 p-0"><h3>Chat List</h3></div>
       <all-user
         v-for="result in results"
         :key="result.Id"
@@ -21,9 +21,10 @@
       </all-user>
     </div>
 
-    <div class="col-9 bg-danger parent convo">
-      <div class="col-12 w-100">
-        <span v-if="chatterName" class="shadow-lg bg-warning rounded-pill ps-3 pe-3"><b>{{ chatterName }}</b></span>
+    <div class="col-9  parent convo">
+      <div class="col-12 w-100 mt-1">
+        <img v-if="chatterName" src="https://media.istockphoto.com/vectors/user-member-vector-icon-for-ui-user-interface-or-profile-face-avatar-vector-id1130884625?k=20&m=1130884625&s=612x612&w=0&h=OITK5Otm_lRj7Cx8mBhm7NtLTEHvp6v3XnZFLZmuB9o=" alt="">
+        <span v-if="chatterName" class="shadow-lg bg-white rounded-pill mt-1 me-1 ps-3 pe-3"><b>{{ chatterName }}</b></span>
       </div>
       <the-conversation
         v-for="x in results2"
@@ -88,6 +89,7 @@ export default {
    
     // this.chatterName=this.$store.getters["user/getChatterName"];
     this.GetLoggedUser();
+    
   },
   methods: {
     sendMsg(){
@@ -142,15 +144,26 @@ export default {
           //   console.log(data)
           const results = [];
           for (const id in data) {
-            results.push({
+           //if(0!==data[id].Id){
+              results.push({
               Id: data[id].Id,
               FirstName: data[id].FirstName,
               LastName: data[id].LastName,
               Email: data[id].Email,
             });
+           // }
+            
           }
-          this.results = results;
-          // console.log(this.results)
+          //console.log(results)
+          const UserIndex = results.findIndex(
+              (x) => x.Id === this.$store.getters["user/loggedUserId"]
+            );
+           
+            results.splice(UserIndex, 1);
+        //context.commit('addProductToCart',product)
+           this.results = results;
+         // this.results = cc;
+           console.log(UserIndex)
         })
         .catch((error) => {
           this.isLoading = false;
@@ -251,7 +264,8 @@ export default {
     }
   },
   mounted() {
-    setInterval(this.loadUsers, 2000);
+    this.loadUsers();
+   // setInterval(this.loadUsers, 2000);
     setInterval(this.allMessages, 2000);
     //setInterval(this.chatterName=this.$store.getters["user/getChatterName"], 1000);
 
@@ -265,11 +279,22 @@ export default {
   position: sticky;
   top: -100;
 } */
-.convo{
+.all-user{
+  background: rgba(255, 255, 255, 0.562);
+}
+img{
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+}
+.covo{
+  margin-left: 10px;
+}
+.z{
     /* background: linear-gradient(#282727a9, #a3aaa9b6),
     url(https://images.unsplash.com/photo-1666844550308-9b47df48af49?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80); */
     background: 
-    url(https://images.unsplash.com/photo-1666844550308-9b47df48af49?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80);
+    url(https://images.unsplash.com/photo-1666756144626-127da4bde0d0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1935&q=80);
   background-repeat: no-repeat;
   background-size:cover;
   background-attachment: fixed;
