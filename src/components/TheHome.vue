@@ -1,13 +1,18 @@
 <template>
-   
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+    crossorigin="anonymous"
+  />
     <div class="header">
       <div class="container">
         <ul class="nav">
-          <li><router-link class="x" to="/registration"> JOIN NOW </router-link></li>
-          <li><router-link class="x" to="/login"> Login </router-link></li>
+          <li><router-link class="x " to="/registration"> Register Now </router-link></li>
+          <!-- <li><router-link class="x" to="/login"> Login </router-link></li>
 					<li>Work</li>
           <li>Team</li>
-          <li>Contact</li>
+          <li>Contact</li> -->
         </ul>
       </div>
     </div>
@@ -16,7 +21,16 @@
       <div class="container">  
         <div class="main">
           <h1>BEE CHAT</h1>
-          <a href="#" class="btn-main">Register</a>
+          <form @submit.prevent="login">
+            <label for="">
+              <input class="inpt" type="text" placeholder="Enter Your Mail" v-model="Email"> 
+         
+            </label>
+          <br>
+          <label for="">
+            <button type="submit" class="btn btn-secondary">Join Chat</button>
+          </label>
+          </form>
           
         </div>
       </div>
@@ -58,6 +72,64 @@
 
 </template>
 
+<script>
+export default {
+  data(){
+        return{
+          
+          Email:"",
+          loggedPersonMail:"",
+          successful:false,
+        }
+    },
+  methods:{
+    async login(){ 
+      alert()
+            //this.clicked=true;
+           await fetch(
+                "https://localhost:44313/api/login/user",
+                {
+                    method: "POST",
+                    headers: {
+                    "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                    Email: this.Email,
+                   
+                    
+                    }),
+                
+                }
+                )
+             
+            .then((response)=>{
+                if(response.ok){
+                    this.loggedPersonMail=  this.Email;
+
+                    this.$store.dispatch('user/addLoggedUser',{
+                    Email:this.loggedPersonMail,
+                    });
+
+                    this.$router.replace('/user')
+                }
+            })
+               
+
+                .catch((error) => {
+                    this.error = error;
+                    console.log(error);
+                }
+            );
+
+           // console.log(this.loggedPersonMail)
+           
+
+    
+                
+        }
+  }
+}
+</script>
 <style scoped>
 /* html, body {
     margin: 0;
@@ -71,7 +143,18 @@
      text-decoration: none;
      color: #333;
  }
+  .inpt{
+    padding: 10px 50px;
+    border: 0;
+    margin-bottom: 15px;
+    border-radius: 10px;
+  }
+  .inpt::placeholder{
+   font-family: Arial, Helvetica, sans-serif;
+   text-align: center;
   
+    
+  }
   .container {
     max-width: 940px;
     margin: 0 auto;

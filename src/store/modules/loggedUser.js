@@ -8,6 +8,7 @@ export default{
             loggedUserFirstName:null,
             loggedUserLastName:null,
             Id2:null,
+            ChatterName:123,
 
            
         };
@@ -37,6 +38,11 @@ export default{
         setId2(state,payload){
             state.Id2=payload.Id2;
            
+        },
+        setChatterName(state,payload){
+            state.ChatterName=payload.x;
+            console.log(state.ChatterName)
+           
         }
     },
 
@@ -49,6 +55,9 @@ export default{
         },
         addId2(context,payload){
             context.commit('setId2',payload)
+        },
+        addChatterName(context,payload){
+            context.commit('setChatterName',payload)
         }
         
     },
@@ -62,6 +71,9 @@ export default{
         },
         getId2(state){
             return state.Id2;
+        },
+        getChatterName(state){
+            return state.ChatterName;
         },
            
        

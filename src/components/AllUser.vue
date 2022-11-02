@@ -51,6 +51,12 @@ export default {
             Id2: this.Id,
             
           });
+
+        this.$store.dispatch("user/addChatterName", {
+          x: this.FirstName  ,
+            
+          });
+          console.log(this.FirstName)
         
     // await  fetch(
         
@@ -91,7 +97,7 @@ export default {
     //       //this.isLoading = false;
     //       //this.error = error;
     //     });
-    //     this.$emit('convo', this.results);
+        this.$emit('convo', this.FirstName);
     },
     
 

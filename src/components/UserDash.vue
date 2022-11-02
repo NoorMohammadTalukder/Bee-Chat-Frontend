@@ -7,7 +7,7 @@
   />
 
   <div class="row h-75 g-0">
-    <div class="col-3 shadow-lg">
+    <div class="col-3 shadow-lg p-3">
       <div class="text-center bg-primary m-0 p-0">All Users</div>
       <all-user
         v-for="result in results"
@@ -21,9 +21,9 @@
       </all-user>
     </div>
 
-    <div class="col-9 bg-danger parent">
-      <div class="col-12 w-100 bg-success">
-        <h5>{{ loggedMail }}</h5>
+    <div class="col-9 bg-danger parent convo">
+      <div class="col-12 w-100">
+        <span v-if="chatterName" class="shadow-lg bg-warning rounded-pill ps-3 pe-3"><b>{{ chatterName }}</b></span>
       </div>
       <the-conversation
         v-for="x in results2"
@@ -31,6 +31,7 @@
         :Text="x.Text"
         :UserId="x.UserId"
         :UserId2="x.UserId2"
+      
       ></the-conversation>
 
      
@@ -71,7 +72,8 @@ export default {
       loggedMail: "",
       Text:"",
       Id1:"",
-      Id2:""
+      Id2:"",
+      chatterName:""
     };
   },
 
@@ -83,6 +85,8 @@ export default {
   },
   created() {
     this.loggedMail = this.$store.getters["user/loggedEmail"];
+   
+    // this.chatterName=this.$store.getters["user/getChatterName"];
     this.GetLoggedUser();
   },
   methods: {
@@ -90,6 +94,9 @@ export default {
      // alert()
       this.Id1=this.$store.getters["user/loggedUserId"];
       this.Id2 = this.$store.getters["user/getId2"];
+     
+      //console.log("vvv"+ this.chatterName)
+     
       fetch(
                 "https://localhost:44313/api/create/messsage/user",
                 {
@@ -192,9 +199,9 @@ export default {
     convo(value) {
       // alert();
      // console.log(value);
-      this.results2 = value;
-      this.Id2=value.Id;
-      console.log(this.Id2)
+      this.chatterName = value;
+      // this.Id2=value.Id;
+      // console.log(this.Id2)
       //console.log(this.results2);
     },
 
@@ -246,6 +253,7 @@ export default {
   mounted() {
     setInterval(this.loadUsers, 2000);
     setInterval(this.allMessages, 2000);
+    //setInterval(this.chatterName=this.$store.getters["user/getChatterName"], 1000);
 
   },
 };
@@ -257,7 +265,16 @@ export default {
   position: sticky;
   top: -100;
 } */
-
+.convo{
+    /* background: linear-gradient(#282727a9, #a3aaa9b6),
+    url(https://images.unsplash.com/photo-1666844550308-9b47df48af49?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80); */
+    background: 
+    url(https://images.unsplash.com/photo-1666844550308-9b47df48af49?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80);
+  background-repeat: no-repeat;
+  background-size:cover;
+  background-attachment: fixed;
+  background-position: center center;
+}
 .parent{
   position: relative;
 }

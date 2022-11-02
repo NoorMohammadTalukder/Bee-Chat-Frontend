@@ -1,9 +1,10 @@
 <template >
     
         <section >
-        <div class="col-12 m-1 bg-warning">
+        <div class="col-12  ">
             <div>
-                <p> {{Text}}</p>
+                <h5> {{Text}}</h5>
+                
             </div>
         </div>
         <div>
