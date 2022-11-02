@@ -173,6 +173,7 @@ export default {
   .nav {
     margin: 0;
     padding: 20px 0;
+
   }
   
   .nav li {

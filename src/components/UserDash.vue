@@ -6,9 +6,9 @@
     crossorigin="anonymous"
   />
 
-  <div class="row h-75 g-0 z">
+  <div class="row  g-0 z bg-danger">
     <div class="col-3 all-user shadow-lg p-3">
-      <div class="text-center  mb-2 p-0"><h3>Chat List</h3></div>
+      <div class="text-center mb-2 p-0"><h3>Chat List</h3></div>
       <all-user
         v-for="result in results"
         :key="result.Id"
@@ -21,37 +21,59 @@
       </all-user>
     </div>
 
-    <div class="col-9  parent convo">
-      <div class="col-12 w-100 mt-1">
-        <img v-if="chatterName" src="https://media.istockphoto.com/vectors/user-member-vector-icon-for-ui-user-interface-or-profile-face-avatar-vector-id1130884625?k=20&m=1130884625&s=612x612&w=0&h=OITK5Otm_lRj7Cx8mBhm7NtLTEHvp6v3XnZFLZmuB9o=" alt="">
-        <span v-if="chatterName" class="shadow-lg bg-white rounded-pill mt-1 me-1 ps-3 pe-3"><b>{{ chatterName }}</b></span>
-      </div>
-      <the-conversation
-        v-for="x in results2"
-        :key="x.Id"
-        :Text="x.Text"
-        :UserId="x.UserId"
-        :UserId2="x.UserId2"
-      
-      ></the-conversation>
-
-     
-
-     
-        <form  @submit.prevent="sendMsg" action="">
-          <div class="input-group mb-3 sticky child">
-          <input
-          type="text"
-          class="form-control"
-          placeholder="Enter Your Message"
-          aria-label="Enter Your Message"
-          aria-describedby="basic-addon2"
-          v-model="Text"
+    <div class="col-9 convo">
+      <div class="col-12 mt-1  all-msg">
+        <div class="m-3">
+          <img  v-if="chatterName"
+         
+          src="https://media.istockphoto.com/vectors/user-member-vector-icon-for-ui-user-interface-or-profile-face-avatar-vector-id1130884625?k=20&m=1130884625&s=612x612&w=0&h=OITK5Otm_lRj7Cx8mBhm7NtLTEHvp6v3XnZFLZmuB9o="
+          alt=""
         />
-        <button type="submit" class="btn btn-primary me-1">Send</button>
+        <span
+          v-if="chatterName"
+          class="shadow-lg bg-white rounded-pill mt-1 me-1 ps-3 pe-3"
+          ><b>{{ chatterName }}</b></span
+        >
+        <button @click="logout" type="button" class="btn btn-danger">Logout</button>
+        </div>
+
+       <div  v-if="chatterName">
+        <the-conversation 
+          v-for="x in results2"
+          :key="x.Id"
+          :Id="x.Id"
+          :Text="x.Text"
+          :UserId="x.UserId"
+          :UserId2="x.UserId2"
+        ></the-conversation>
+       </div>
       </div>
-        </form>
-      
+
+      <form @submit.prevent="sendMsg" class="w-75" action="">
+        <!-- <div class=" child"> -->
+        <div class="send-msg">
+          <div>
+            <input
+              type="text"
+              class="form-control  inpt"
+              placeholder="Enter Your Message"
+              aria-label="Enter Your Message"
+              aria-describedby="basic-addon2"
+              v-model="Text"
+            />
+          </div>
+          <div>
+            <button type="submit" class="btn btn-primary send-btn">Send</button>
+          </div>
+        </div>
+        <!-- </div> -->
+      </form>
+      <!-- </div> -->
+
+      <!-- <form action="">
+          <input type="text" class="inpt" placeholder="Enter Your Message">
+          <button type="submit" class="btn btn-primary p-2 ">Send</button>
+        </form> -->
     </div>
   </div>
 </template>
@@ -71,10 +93,10 @@ export default {
       // x: [],
       // xx:'',
       loggedMail: "",
-      Text:"",
-      Id1:"",
-      Id2:"",
-      chatterName:""
+      Text: "",
+      Id1: "",
+      Id2: "",
+      chatterName: "",
     };
   },
 
@@ -86,49 +108,47 @@ export default {
   },
   created() {
     this.loggedMail = this.$store.getters["user/loggedEmail"];
-   
+
     // this.chatterName=this.$store.getters["user/getChatterName"];
     this.GetLoggedUser();
-    
   },
   methods: {
-    sendMsg(){
-     // alert()
-      this.Id1=this.$store.getters["user/loggedUserId"];
+    logout(){
+      this.$router.replace('/');
+      this.results2=[];
+      this.$store.reset();
+    },
+    sendMsg() {
+      // alert()
+      this.Id1 = this.$store.getters["user/loggedUserId"];
       this.Id2 = this.$store.getters["user/getId2"];
-     
+
       //console.log("vvv"+ this.chatterName)
-     
-      fetch(
-                "https://localhost:44313/api/create/messsage/user",
-                {
-                    method: "POST",
-                    headers: {
-                    "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                    Text: this.Text,
-                    UserId: this.Id1,
-                    UserId2: this.Id2,
-                    
-                    }),
-                
-                }
-                )
-                .then((response) => {
-                    if (!response.ok) {
-                    throw new Error("Could not save the data");
-                    }else{
-                        this.Text="";
-                        this.UserId="";
-                        this.UserId2="";
-                    }
-                })
-                .catch((error) => {
-                    this.error = error;
-                    console.log(error);
-                }
-            );
+
+      fetch("https://localhost:44313/api/create/messsage/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Text: this.Text,
+          UserId: this.Id1,
+          UserId2: this.Id2,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Could not save the data");
+          } else {
+            this.Text = "";
+            this.UserId = "";
+            this.UserId2 = "";
+          }
+        })
+        .catch((error) => {
+          this.error = error;
+          console.log(error);
+        });
     },
     async loadUsers() {
       await fetch("https://localhost:44313/api/all/user", {
@@ -144,26 +164,25 @@ export default {
           //   console.log(data)
           const results = [];
           for (const id in data) {
-           //if(0!==data[id].Id){
-              results.push({
+            //if(0!==data[id].Id){
+            results.push({
               Id: data[id].Id,
               FirstName: data[id].FirstName,
               LastName: data[id].LastName,
               Email: data[id].Email,
             });
-           // }
-            
+            // }
           }
           //console.log(results)
           const UserIndex = results.findIndex(
-              (x) => x.Id === this.$store.getters["user/loggedUserId"]
-            );
-           
-            results.splice(UserIndex, 1);
-        //context.commit('addProductToCart',product)
-           this.results = results;
-         // this.results = cc;
-           console.log(UserIndex)
+            (x) => x.Id === this.$store.getters["user/loggedUserId"]
+          );
+
+          results.splice(UserIndex, 1);
+          //context.commit('addProductToCart',product)
+          this.results = results;
+          // this.results = cc;
+          console.log(UserIndex);
         })
         .catch((error) => {
           this.isLoading = false;
@@ -211,18 +230,18 @@ export default {
 
     convo(value) {
       // alert();
-     // console.log(value);
+      // console.log(value);
       this.chatterName = value;
+
       // this.Id2=value.Id;
       // console.log(this.Id2)
       //console.log(this.results2);
     },
 
-    allMessages(){
-      this.Id1=this.$store.getters["user/loggedUserId"];
+    allMessages() {
+      this.Id1 = this.$store.getters["user/loggedUserId"];
       this.Id2 = this.$store.getters["user/getId2"];
-        fetch(
-        
+      fetch(
         `https://localhost:44313/api/all/coversation/${this.Id1}/${this.Id2}`,
         {
           method: "GET",
@@ -230,29 +249,28 @@ export default {
       )
         .then((response) => {
           if (response.ok) {
-             return response.json();
-             //console.log(response)
+            return response.json();
+            //console.log(response)
           }
         })
         .then((data) => {
           // this.isLoading = false;
-          
-        //   console.log(data)
+
+          //   console.log(data)
           const results = [];
           for (const id in data) {
             results.push({
               // id:id,
               // name:data[id].name,
-             // rating: data[id].rating,
+              // rating: data[id].rating,
               Id: data[id].Id,
               Text: data[id].Text,
               UserId: data[id].UserId,
               UserId2: data[id].UserId2,
-             
             });
           }
           this.results2 = results;
-        //   console.log(this.results)
+          //   console.log(this.results)
         })
         .catch((error) => {
           console.log(error);
@@ -260,51 +278,80 @@ export default {
           //this.isLoading = false;
           //this.error = error;
         });
-        // this.$emit('convo', this.results);
-    }
+      // this.$emit('convo', this.results);
+    },
   },
   mounted() {
     this.loadUsers();
-   // setInterval(this.loadUsers, 2000);
+    // setInterval(this.loadUsers, 2000);
     setInterval(this.allMessages, 2000);
     //setInterval(this.chatterName=this.$store.getters["user/getChatterName"], 1000);
-
   },
 };
 </script>
 
 <style scoped>
+.all-msg {
+  height: 700px;
+  overflow-y: scroll;
+}
+.send-btn {
+  /* margin-left: 1000px; */
+  margin-top: 10px;
+  float: right;
+}
+.inpt {
+  /* padding: 10px 350px; */
+  border: 0;
+  margin-bottom: 15px;
+
+  margin-left: 20px;
+  margin-right: 10px;
+  margin-top:60px;
+  width:98%;
+}
+.inpt::placeholder {
+  font-family: Arial, Helvetica, sans-serif;
+}
 /* .sticky{
    position: -webkit-sticky; 
   position: sticky;
   top: -100;
 } */
-.all-user{
+.all-user {
   background: rgba(255, 255, 255, 0.562);
+  overflow-y:scroll;
+  height: 100%;
 }
-img{
-    height: 30px;
-    width: 30px;
-    border-radius: 50%;
+.send-msg{
+  overflow: hidden;
+  /* background: yellow; */
 }
-.covo{
+img {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+}
+.covo {
   margin-left: 10px;
+  /* height: 1px; */
 }
-.z{
-    /* background: linear-gradient(#282727a9, #a3aaa9b6),
-    url(https://images.unsplash.com/photo-1666844550308-9b47df48af49?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80); */
-    background: 
-    url(https://images.unsplash.com/photo-1666756144626-127da4bde0d0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1935&q=80);
+.z {
+  background: linear-gradient(#06bfd44f, #164182b6);
+  /*  url(https://images.unsplash.com/photo-1666844550308-9b47df48af49?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80); */
+  /* background: 
+    url(https://images.unsplash.com/photo-1666756144626-127da4bde0d0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1935&q=80); */
   background-repeat: no-repeat;
-  background-size:cover;
+  background-size: cover;
   background-attachment: fixed;
   background-position: center center;
+  height: 100vh;
 }
-.parent{
+.parent {
   position: relative;
 }
-.child{
+.child {
   position: absolute;
-    bottom: 0;
+  bottom: 0;
 }
 </style>

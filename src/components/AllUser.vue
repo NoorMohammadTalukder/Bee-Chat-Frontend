@@ -1,13 +1,14 @@
 <template>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <div class="d-flex col-12">
-        <div class="img"><img src="https://media.istockphoto.com/vectors/user-member-vector-icon-for-ui-user-interface-or-profile-face-avatar-vector-id1130884625?k=20&m=1130884625&s=612x612&w=0&h=OITK5Otm_lRj7Cx8mBhm7NtLTEHvp6v3XnZFLZmuB9o=" alt=""></div>
-        <div class="d-flex justify-content-start align-items-center  w-100">
-           <div class="name w-50">
+    <div class=" col-12 row list mt-3 " >
+        <div class="img col-2"><img src="https://media.istockphoto.com/vectors/user-member-vector-icon-for-ui-user-interface-or-profile-face-avatar-vector-id1130884625?k=20&m=1130884625&s=612x612&w=0&h=OITK5Otm_lRj7Cx8mBhm7NtLTEHvp6v3XnZFLZmuB9o=" alt="">
+        </div>
+        <div class="col-6 ">
+           <div class="name m-0">
             <p>{{FirstName}} {{LastName}}</p>
            </div>
-           <div class="ms-5">
+           <div class="mb-2  ">
             <button v-on:click="conversation">Chat Now</button>
            </div>
         </div>
@@ -56,47 +57,7 @@ export default {
           x: this.FirstName  ,
             
           });
-        //  console.log(this.FirstName)
-        
-    // await  fetch(
-        
-    //     `https://localhost:44313/api/all/coversation/${this.userID}/${this.userID2}`,
-    //     {
-    //       method: "GET",
-    //     }
-    //   )
-    //     .then((response) => {
-    //       if (response.ok) {
-    //          return response.json();
-    //          //console.log(response)
-    //       }
-    //     })
-    //     .then((data) => {
-    //       // this.isLoading = false;
-          
-    //     //   console.log(data)
-    //       const results = [];
-    //       for (const id in data) {
-    //         results.push({
-    //           // id:id,
-    //           // name:data[id].name,
-    //          // rating: data[id].rating,
-    //           Id: data[id].Id,
-    //           Text: data[id].Text,
-    //           UserId: data[id].UserId,
-    //           UserId2: data[id].UserId2,
-             
-    //         });
-    //       }
-    //       this.results = results;
-    //     //   console.log(this.results)
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //       // alert(error)
-    //       //this.isLoading = false;
-    //       //this.error = error;
-    //     });
+      
         this.$emit('convo', this.FirstName);
     },
     
@@ -116,6 +77,9 @@ export default {
 </script>
 
 <style scoped>
+.list:hover{
+  background: rgba(103, 14, 186, 0.499);
+}
     button,
 a {
   text-decoration: none;
@@ -127,7 +91,7 @@ a {
   cursor: pointer;
   border-radius: 30px;
   /* margin-right: 0.5rem; */
-  font-size: 12px;
+  font-size: 10px;
   margin-bottom: 6px;
   /* display: inline-block; */
 }
@@ -138,6 +102,12 @@ img{
     border-radius: 50%;
 }
 .name p{
-    margin-top: 7px;
+    /* margin-top: 7px; */
+    margin: 0;
+}
+.list{
+  padding-top: 4px;
+  height: 4rem;
+  transition: 0.3s ease-in;
 }
 </style>

@@ -24,6 +24,10 @@ export default {
 }
 
 body {
+  
   margin: 0;
+  overflow: hidden;
+  /* height: 200px !important; */
+
 }
 </style>
