@@ -292,7 +292,7 @@ export default {
 
 <style scoped>
 .all-msg {
-  height: 700px;
+  height: 70%;
   overflow-y: scroll;
 }
 .send-btn {
@@ -347,11 +347,11 @@ img {
   background-position: center center;
   height: 100vh;
 }
-.parent {
+/* .parent {
   position: relative;
 }
 .child {
   position: absolute;
-  bottom: 0;
-}
+  bottom: 0; */
+/* } */
 </style>
